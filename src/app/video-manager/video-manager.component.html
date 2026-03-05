@@ -1,0 +1,93 @@
+<main class="manager-shell">
+  <div class="manager-card">
+    <div class="manager-header">
+      <h1>Video Manager</h1>
+      <a routerLink="/" class="back-link">Back to Homepage</a>
+    </div>
+    <p class="help-text">
+      This manager saves directly to the API/database.
+    </p>
+
+    @if (!isEditing()) {
+      <div class="actions-row">
+        <button type="button" (click)="newVideo()" [disabled]="loading()">New Video</button>
+      </div>
+
+      <div class="video-listing" aria-live="polite">
+        @if (videosArray.controls.length === 0) {
+          <p>No videos found.</p>
+        } @else {
+          @for (videoGroup of videosArray.controls; track $index) {
+            <article class="video-row">
+              <button type="button" class="video-link" (click)="openEditor($index)">
+                <span class="video-link-title">{{ videoGroup.value.title || 'Untitled video' }}</span>
+                <span>
+                  Type: {{ videoGroup.value.kind }} · Active: {{ videoGroup.value.active ? 'Yes' : 'No' }}
+                </span>
+              </button>
+            </article>
+          }
+        }
+      </div>
+    } @else {
+      <div class="actions-row">
+        <button type="button" (click)="showList()" [disabled]="loading()">Back to List</button>
+        <button type="button" (click)="saveVideos()" [disabled]="loading() || !canSave()">
+          Save
+        </button>
+        <button type="button" (click)="removeSelectedVideo()" [disabled]="loading()">Delete</button>
+      </div>
+
+      @if (selectedVideoGroup(); as selectedGroup) {
+        <form [formGroup]="selectedGroup">
+          <section class="video-item">
+              <div class="row two-col">
+                <label>
+                  Title
+                  <input type="text" formControlName="title" />
+                </label>
+                <label>
+                  Type
+                  <select formControlName="kind">
+                    <option value="testimonial">Testimonial</option>
+                    <option value="instructional">Instructional</option>
+                  </select>
+                </label>
+              </div>
+
+              <label>
+                Video URL
+                <input type="url" formControlName="videoUrl" placeholder="https://.../video.mp4" />
+              </label>
+
+              <div class="row two-col">
+                <label>
+                  Poster URL
+                  <input type="url" formControlName="posterUrl" placeholder="https://.../poster.jpg" />
+                </label>
+                <label>
+                  Transcript Text
+                  <textarea
+                    formControlName="transcriptText"
+                    rows="4"
+                    placeholder="Paste transcript text"
+                  ></textarea>
+                </label>
+              </div>
+
+              <div class="row row-end">
+                <label class="checkbox">
+                  <input type="checkbox" formControlName="active" />
+                  Active
+                </label>
+              </div>
+          </section>
+        </form>
+      }
+    }
+
+    @if (saveMessage()) {
+      <p class="save-msg">{{ saveMessage() }}</p>
+    }
+  </div>
+</main>

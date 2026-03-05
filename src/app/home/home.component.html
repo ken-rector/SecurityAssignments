@@ -1,0 +1,234 @@
+<main class="site-root">
+  <section class="hero section-shell">
+    <div class="section-inner hero-grid">
+      <div>
+        <p class="eyebrow">SecurityAssignments.com</p>
+        <h1>The Operating System for Modern Security Guard Companies</h1>
+        <p class="subheadline">
+          Automate scheduling. Enforce license compliance. Prevent costly mistakes. Streamline guard
+          communication. Generate invoices instantly.
+        </p>
+        <div class="hero-cta-row">
+          <a class="btn btn-primary" href="#final-cta">Book a Live Demo</a>
+          <a class="btn btn-secondary" href="#overview">Watch 3-Minute Overview</a>
+        </div>
+        <p class="trust-line">
+          Built by senior IT professionals and designed with 17 years of military security
+          experience.
+        </p>
+      </div>
+      <div class="hero-visual">
+        <img
+          ngSrc="images/security-guard-team.svg"
+          width="640"
+          height="420"
+          priority
+          alt="Professional security personnel representing field operations"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-shell" aria-labelledby="problem-heading">
+    <div class="section-inner">
+      <h2 id="problem-heading">Where Security Companies Lose Money</h2>
+      <p class="section-lead">Security operations are complex. Mistakes are expensive.</p>
+      <ul class="bullet-grid">
+        <li>Expired guard cards slipping through</li>
+        <li>Double-booked officers</li>
+        <li>Overtime errors</li>
+        <li>No-shows and last-minute chaos</li>
+        <li>Manual compliance tracking</li>
+        <li>Delayed invoicing</li>
+        <li>Paper-based incident reports</li>
+        <li>Disconnected scheduling and billing systems</li>
+      </ul>
+      <p class="section-emphasis">
+        Every one of these issues costs time, money, and reputation. SecurityAssignments eliminates
+        operational risk at the source.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-shell" aria-labelledby="solution-heading">
+    <div class="section-inner">
+      <h2 id="solution-heading">The Solution</h2>
+      <div class="card-grid">
+        <article class="info-card">
+          <h3>1. Mistake-Proof Scheduling</h3>
+          <p>
+            Five automated assignment methods. Smart conflict detection. Overtime controls. Instant
+            guard confirmations.
+          </p>
+          <p>No more spreadsheet chaos.</p>
+        </article>
+        <article class="info-card">
+          <h3>2. Automated License &amp; Qualification Enforcement</h3>
+          <p>
+            Assignments are validated against guard credentials before deployment. If a
+            qualification doesn’t match — it doesn’t schedule.
+          </p>
+          <p>Compliance built in.</p>
+        </article>
+        <article class="info-card">
+          <h3>3. Multi-Channel Guard Notifications</h3>
+          <p>Notify officers instantly via SMS, email, and mobile app.</p>
+          <p>Track confirmations in real time.</p>
+        </article>
+        <article class="info-card">
+          <h3>4. Onsite Check-In &amp; Reporting</h3>
+          <p>Geofenced clock-in and clock-out. Real-time incident reporting. Full audit trail.</p>
+          <p>Protect your company with documented proof.</p>
+        </article>
+        <article class="info-card">
+          <h3>5. Automated Invoicing &amp; Reporting</h3>
+          <p>
+            Generate invoices automatically based on completed assignments. Export detailed reports
+            instantly.
+          </p>
+          <p>QuickBooks integration coming soon.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="overview" class="section-shell" aria-labelledby="results-heading">
+    <div class="section-inner">
+      <h2 id="results-heading">Proven in the Field</h2>
+      @if (testimonialVideos().length > 0) {
+        <div class="video-scroller" aria-label="Testimonial videos">
+          @for (video of testimonialVideos(); track video.featureId + video.videoUrl) {
+            <article class="video-card">
+              <h3>{{ video.title }}</h3>
+              @if (toYouTubeEmbedUrl(video.videoUrl); as youtubeUrl) {
+                <iframe
+                  class="video-frame"
+                  [src]="youtubeUrl"
+                  [title]="video.title"
+                  loading="lazy"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
+              } @else {
+                <video controls preload="metadata" [poster]="video.posterUrl || null">
+                  <source [src]="video.videoUrl" type="video/mp4" />
+                </video>
+              }
+            </article>
+          }
+        </div>
+      } @else {
+        <div class="video-placeholder" role="img" aria-label="Testimonial video placeholder">
+          Testimonials will appear here after video manager publishing.
+        </div>
+      }
+      <h3 class="subsection-title">Client Results Snapshot</h3>
+      <ul class="bullet-grid compact">
+        <li>Reduced scheduling errors</li>
+        <li>Faster billing cycle</li>
+        <li>Eliminated expired-license incidents</li>
+        <li>Significant admin time savings</li>
+        <li>Improved guard accountability</li>
+      </ul>
+      <a class="btn btn-secondary" href="#">Read the Full Case Study</a>
+    </div>
+  </section>
+
+  <section class="section-shell" aria-labelledby="built-for-heading">
+    <div class="section-inner">
+      <h2 id="built-for-heading">Built by People Who Understand Security Operations</h2>
+      <p>SecurityAssignments was created by:</p>
+      <ul class="bullet-list">
+        <li>Senior IT analysts and system architects</li>
+        <li>A security professional with 17 years of military experience</li>
+        <li>A team focused on reliability, compliance, and operational control</li>
+      </ul>
+      <p>We didn’t build a generic scheduling tool.</p>
+      <p>We built a system designed specifically for security companies.</p>
+    </div>
+  </section>
+
+  <section class="section-shell" aria-labelledby="why-heading">
+    <div class="section-inner">
+      <h2 id="why-heading">Why Security Firms Choose Us</h2>
+      <ul class="bullet-grid compact">
+        <li>Industry-specific automation</li>
+        <li>Compliance-first design</li>
+        <li>Clean, modern interface</li>
+        <li>Fast onboarding</li>
+        <li>Direct access to leadership</li>
+        <li>Built to scale with your company</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section-shell" aria-labelledby="events-heading">
+    <div class="section-inner">
+      <h2 id="events-heading">Meet Us at Industry Events</h2>
+      <p>
+        We actively participate in security industry conventions and professional gatherings.
+      </p>
+      <a class="btn btn-secondary" href="#final-cta">Book demo at event</a>
+    </div>
+  </section>
+
+  @if (instructionalVideos().length > 0) {
+    <section class="section-shell" aria-labelledby="instructional-heading">
+      <div class="section-inner">
+        <h2 id="instructional-heading">Instructional Videos</h2>
+        <p class="section-lead">Training and operational walkthroughs for your team.</p>
+        <div class="video-scroller" aria-label="Instructional videos">
+          @for (video of instructionalVideos(); track video.featureId + video.videoUrl) {
+            <article class="video-card">
+              <h3>{{ video.title }}</h3>
+              @if (toYouTubeEmbedUrl(video.videoUrl); as youtubeUrl) {
+                <iframe
+                  class="video-frame"
+                  [src]="youtubeUrl"
+                  [title]="video.title"
+                  loading="lazy"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
+              } @else {
+                <video controls preload="metadata" [poster]="video.posterUrl || null">
+                  <source [src]="video.videoUrl" type="video/mp4" />
+                </video>
+              }
+            </article>
+          }
+        </div>
+      </div>
+    </section>
+  }
+
+  <section id="final-cta" class="section-shell final-cta" aria-labelledby="final-cta-heading">
+    <div class="section-inner">
+      <h2 id="final-cta-heading">Stop Losing Money to Operational Mistakes</h2>
+      <p>
+        SecurityAssignments gives you control, visibility, and protection across your entire guard
+        workforce.
+      </p>
+      <div class="hero-cta-row">
+        <a class="btn btn-primary" href="#">Schedule Your Live Demo</a>
+        <a class="btn btn-secondary" href="#">Request Pricing</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="section-inner">
+    <p class="footer-brand">SecurityAssignments.com</p>
+    <p>A Product of AssignPros Inc.</p>
+    <p>Based in Texas</p>
+    <nav aria-label="Footer links" class="footer-nav">
+      <a href="#">Contact</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a [routerLink]="'/video_manager'">Video Manager</a>
+    </nav>
+  </div>
+</footer>

@@ -1,0 +1,191 @@
+:host {
+  --bg-main: #071422;
+  --bg-card: #0e2135;
+  --border-soft: #2a405a;
+  --text-main: #e8eff8;
+  --text-muted: #a8bacd;
+  --accent-strong: #7ea2cb;
+  --danger: #ff8f8f;
+  color: var(--text-main);
+  display: block;
+}
+
+.manager-shell {
+  background: var(--bg-main);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.manager-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: 0.8rem;
+  margin: 0 auto;
+  max-width: 72rem;
+  padding: 1.1rem;
+}
+
+.manager-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.back-link {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.help-text {
+  margin: 0 0 1rem;
+}
+
+.video-item {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.video-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.video-listing {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.video-row {
+  border: 1px solid var(--border-soft);
+  border-radius: 0.65rem;
+  padding: 0;
+}
+
+.video-link {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: 0.65rem;
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.8rem;
+}
+
+.video-link-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.video-link span:last-child {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.video-item {
+  border: 1px solid var(--border-soft);
+  border-radius: 0.65rem;
+  padding: 0.8rem;
+}
+
+label {
+  color: var(--text-muted);
+  display: grid;
+  font-size: 0.92rem;
+  gap: 0.3rem;
+}
+
+input,
+select,
+button {
+  border: 1px solid var(--border-soft);
+  border-radius: 0.45rem;
+  padding: 0.55rem 0.65rem;
+}
+
+input,
+select {
+  background: #081727;
+  color: var(--text-main);
+}
+
+button {
+  background: #123252;
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.import-label {
+  align-items: center;
+  background: #123252;
+  border: 1px solid var(--border-soft);
+  border-radius: 0.45rem;
+  color: var(--text-main);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 0.9rem;
+  gap: 0.4rem;
+  padding: 0.55rem 0.65rem;
+}
+
+.import-label input {
+  display: none;
+}
+
+.row {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.two-col {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.row-end {
+  align-items: center;
+  grid-template-columns: 1fr auto;
+}
+
+.checkbox {
+  align-items: center;
+  display: flex;
+  gap: 0.4rem;
+}
+
+.error-msg {
+  color: var(--danger);
+}
+
+.save-msg {
+  color: var(--accent-strong);
+  margin-top: 0.8rem;
+}
+
+@media (max-width: 900px) {
+  .manager-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .row-end {
+    grid-template-columns: 1fr;
+  }
+}

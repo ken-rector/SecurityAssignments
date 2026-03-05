@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 630" role="img" aria-labelledby="title desc">
+  <title id="title">Security personnel on site</title>
+  <desc id="desc">Illustration of professional security staff in front of a guarded facility</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#12253d"/>
+      <stop offset="1" stop-color="#0a1727"/>
+    </linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#1f3a58" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#4f6d91" stop-opacity="0.25"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="960" height="630" fill="url(#bg)"/>
+  <rect y="420" width="960" height="210" fill="url(#floor)"/>
+
+  <rect x="120" y="130" width="720" height="300" rx="18" fill="#1a3552" opacity="0.45"/>
+  <rect x="170" y="180" width="620" height="200" rx="12" fill="#254566" opacity="0.5"/>
+
+  <circle cx="330" cy="250" r="42" fill="#d0ddeb"/>
+  <rect x="290" y="292" width="80" height="130" rx="20" fill="#1d3f63"/>
+  <rect x="300" y="422" width="25" height="140" rx="10" fill="#0f2237"/>
+  <rect x="335" y="422" width="25" height="140" rx="10" fill="#0f2237"/>
+
+  <circle cx="480" cy="240" r="46" fill="#d0ddeb"/>
+  <rect x="434" y="286" width="92" height="140" rx="24" fill="#22476e"/>
+  <rect x="446" y="426" width="27" height="136" rx="10" fill="#0f2237"/>
+  <rect x="488" y="426" width="27" height="136" rx="10" fill="#0f2237"/>
+
+  <circle cx="630" cy="252" r="40" fill="#d0ddeb"/>
+  <rect x="590" y="292" width="80" height="130" rx="20" fill="#1d3f63"/>
+  <rect x="600" y="422" width="25" height="140" rx="10" fill="#0f2237"/>
+  <rect x="635" y="422" width="25" height="140" rx="10" fill="#0f2237"/>
+
+  <path d="M478 315l-30 22 12 38h40l12-38z" fill="#7ea2cb"/>
+  <path d="M480 195l72 30v58c0 65-52 98-72 108-20-10-72-43-72-108v-58z" fill="#8eaed1" opacity="0.65"/>
+  <path d="M480 218l47 20v42c0 45-33 69-47 78-14-9-47-33-47-78v-42z" fill="#dce8f6" opacity="0.65"/>
+</svg>

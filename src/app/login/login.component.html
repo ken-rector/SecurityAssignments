@@ -1,0 +1,32 @@
+<main class="login-shell">
+  <section class="login-card" aria-labelledby="login-title">
+    <h1 id="login-title">Sign In</h1>
+    <p class="login-help">Session login is required to access Video Manager.</p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
+      <label>
+        Username
+        <input type="text" formControlName="username" autocomplete="username" />
+      </label>
+
+      <label>
+        Password
+        <input type="password" formControlName="password" autocomplete="current-password" />
+      </label>
+
+      <button type="submit" [disabled]="loading() || loginForm.invalid">
+        @if (loading()) {
+          Signing in...
+        } @else {
+          Sign In
+        }
+      </button>
+    </form>
+
+    @if (errorMessage()) {
+      <p class="error" role="alert">{{ errorMessage() }}</p>
+    }
+
+    <a routerLink="/" class="back-link">Back to homepage</a>
+  </section>
+</main>

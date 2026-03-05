@@ -1,0 +1,53 @@
+.login-shell {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem;
+}
+
+.login-card {
+  width: min(28rem, 100%);
+  background: #0f1823;
+  border: 1px solid #2b415f;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+.login-help {
+  margin-top: 0.25rem;
+  color: #b5c7dc;
+}
+
+.login-form {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+label {
+  display: grid;
+  gap: 0.35rem;
+}
+
+input {
+  width: 100%;
+  border: 1px solid #38506f;
+  background: #101c2b;
+  color: #e9f0f7;
+  border-radius: 0.5rem;
+  padding: 0.65rem 0.75rem;
+}
+
+button {
+  margin-top: 0.25rem;
+}
+
+.error {
+  margin-top: 0.85rem;
+  color: #ffadb0;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 0.85rem;
+}
