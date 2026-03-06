@@ -250,6 +250,15 @@ p {
   width: 100%;
 }
 
+.testimonial-selected-card .video-frame,
+.testimonial-selected-card video {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  min-width: 280px;
+  width: 50%;
+}
+
 .subsection-title {
   margin: 1.25rem 0 0.6rem;
 }

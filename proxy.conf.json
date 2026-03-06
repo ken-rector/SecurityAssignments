@@ -4,5 +4,16 @@
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
+  },
+  "/messages-api": {
+    "target": "http://localhost:3000",
+    "secure": false,
+    "changeOrigin": true,
+    "timeout": 120000,
+    "proxyTimeout": 120000,
+    "pathRewrite": {
+      "^/messages-api": ""
+    },
+    "logLevel": "debug"
   }
 }

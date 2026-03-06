@@ -6,6 +6,11 @@ import { VideoManagerComponent } from './video-manager/video-manager.component';
 
 export const routes: Routes = [
 	{ path: '', component: HomeComponent },
+	{
+		path: 'demo-request',
+		loadComponent: () =>
+			import('./demo-request/demo-request.component').then((m) => m.DemoRequestComponent),
+	},
 	{ path: 'login', component: LoginComponent },
 	{ path: 'video_manager', component: VideoManagerComponent, canActivate: [authGuard] },
 	{ path: '**', redirectTo: '' },

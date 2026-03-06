@@ -72,6 +72,11 @@ export class VideoManagerComponent {
       return;
     }
 
+    const confirmed = window.confirm('Are you sure you want to delete this video?');
+    if (!confirmed) {
+      return;
+    }
+
     this.videosArray.removeAt(index);
     this.showList();
   }

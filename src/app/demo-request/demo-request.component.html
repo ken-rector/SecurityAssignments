@@ -1,0 +1,81 @@
+<main class="demo-shell">
+    <section class="demo-card" aria-labelledby="demo-title">
+        <div class="demo-header">
+            <h1 id="demo-title">Book a Live Demo</h1>
+            <a routerLink="/" class="back-link">Back to Homepage</a>
+        </div>
+
+        <p class="demo-lead">
+            Submit your information and we will send a confirmation by email and text.
+        </p>
+
+        <form [formGroup]="demoForm" (ngSubmit)="submit()" class="demo-form" novalidate>
+            <div class="row two-col">
+                <label>
+                    Full Name
+                    <input type="text" formControlName="fullName" autocomplete="name" />
+                    @if (demoForm.controls.fullName.touched && demoForm.controls.fullName.invalid) {
+                        <span class="field-error">Full name is required.</span>
+                    }
+                </label>
+
+                <label>
+                    Company
+                    <input type="text" formControlName="company" autocomplete="organization" />
+                </label>
+            </div>
+
+            <div class="row two-col">
+                <label>
+                    Email
+                    <input type="email" formControlName="email" autocomplete="email" />
+                    @if (demoForm.controls.email.touched && demoForm.controls.email.invalid) {
+                        <span class="field-error">Enter a valid email address.</span>
+                    }
+                </label>
+
+                <label>
+                    Phone
+                    <input
+                        type="tel"
+                        formControlName="phone"
+                        autocomplete="tel"
+                        inputmode="numeric"
+                        maxlength="12"
+                        placeholder="123-456-7890"
+                        (input)="formatPhoneInput($event)"
+                    />
+                    @if (demoForm.controls.phone.touched && demoForm.controls.phone.invalid) {
+                        <span class="field-error">Enter a valid phone in nnn-nnn-nnnn format.</span>
+                    }
+                </label>
+            </div>
+
+            <label>
+                Message
+                <textarea formControlName="message" rows="6"></textarea>
+                @if (demoForm.controls.message.touched && demoForm.controls.message.invalid) {
+                    <span class="field-error">Message must be at least 10 characters.</span>
+                }
+            </label>
+
+            <div class="actions-row">
+                <button type="submit" [disabled]="loading() || demoForm.invalid">
+                    @if (loading()) {
+                        Sending...
+                    } @else {
+                        Send Demo Request
+                    }
+                </button>
+            </div>
+        </form>
+
+        @if (successMessage()) {
+            <p class="status success" role="status">{{ successMessage() }}</p>
+        }
+
+        @if (errorMessage()) {
+            <p class="status error" role="alert">{{ errorMessage() }}</p>
+        }
+    </section>
+</main>

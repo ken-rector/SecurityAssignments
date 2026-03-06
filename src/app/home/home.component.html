@@ -9,7 +9,7 @@
           communication. Generate invoices instantly.
         </p>
         <div class="hero-cta-row">
-          <a class="btn btn-primary" href="#final-cta">Book a Live Demo</a>
+          <a class="btn btn-primary" [routerLink]="'/demo-request'">Book a Live Demo</a>
           <a class="btn btn-secondary" href="#overview">Watch 3-Minute Overview</a>
         </div>
         <p class="trust-line">
@@ -97,7 +97,7 @@
       <h2 id="results-heading">Proven in the Field</h2>
       @if (testimonialVideos().length > 0) {
         @if (selectedTestimonial(); as selectedVideo) {
-          <article class="video-card">
+          <article class="video-card testimonial-selected-card">
             <h3>{{ selectedVideo.title }}</h3>
             @if (toYouTubeEmbedUrl(selectedVideo.videoUrl); as youtubeUrl) {
               <iframe
@@ -180,7 +180,7 @@
       <p>
         We actively participate in security industry conventions and professional gatherings.
       </p>
-      <a class="btn btn-secondary" href="#final-cta">Book demo at event</a>
+      <a class="btn btn-secondary" [routerLink]="'/demo-request'">Book demo at event</a>
     </div>
   </section>
 
@@ -223,8 +223,8 @@
         workforce.
       </p>
       <div class="hero-cta-row">
-        <a class="btn btn-primary" href="#">Schedule Your Live Demo</a>
-        <a class="btn btn-secondary" href="#">Request Pricing</a>
+        <a class="btn btn-primary" [routerLink]="'/demo-request'">Schedule Your Live Demo</a>
+        <a class="btn btn-secondary" [routerLink]="'/demo-request'">Request Pricing</a>
       </div>
     </div>
   </section>
