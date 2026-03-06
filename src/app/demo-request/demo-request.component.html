@@ -59,6 +59,13 @@
                 }
             </label>
 
+            <div class="captcha-block" aria-live="polite">
+                <div id="demo-recaptcha" class="captcha-wrap"></div>
+                @if (demoForm.controls.captchaToken.touched && demoForm.controls.captchaToken.invalid) {
+                    <span class="field-error">Please complete the captcha verification.</span>
+                }
+            </div>
+
             <div class="actions-row">
                 <button type="submit" [disabled]="loading() || demoForm.invalid">
                     @if (loading()) {

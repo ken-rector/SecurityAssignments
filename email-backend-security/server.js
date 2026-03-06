@@ -34,11 +34,112 @@ app.options('*', cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+const captchaVerifyUrl = process.env.CAPTCHA_VERIFY_URL || 'https://www.google.com/recaptcha/api/siteverify';
+const captchaSecretKey = process.env.CAPTCHA_SECRET_KEY || (process.env.NODE_ENV === 'production' ? '' : '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe');
+const skipCaptcha = process.env.SKIP_CAPTCHA === 'true';
+
+const smsEndpointUrl = process.env.SMS_ENDPOINT_URL || '';
+const smsEndpointMethod = (process.env.SMS_ENDPOINT_METHOD || 'GET').toUpperCase();
+const smsAlertPhone = process.env.ALERT_SMS_PHONE || '';
+const smsAlertMessage = process.env.SMS_ALERT_MESSAGE || 'New SecurityAssignments lead request. Check your inbox.';
+const smsAuthHeaderName = process.env.SMS_AUTH_HEADER_NAME || 'x-internal-key';
+const smsAuthHeaderValue = process.env.SMS_AUTH_HEADER_VALUE || '';
+const smsEnabled = process.env.SMS_ENABLED !== 'false';
+
+function getRequestIp(req) {
+  const forwardedFor = req.headers['x-forwarded-for'];
+  if (typeof forwardedFor === 'string' && forwardedFor.trim()) {
+    return forwardedFor.split(',')[0].trim();
+  }
+
+  return req.socket?.remoteAddress || '';
+}
+
+async function verifyCaptchaToken(captchaToken, remoteIp) {
+  if (skipCaptcha) {
+    return { ok: true };
+  }
+
+  if (!captchaSecretKey) {
+    return { ok: false, error: 'Captcha is not configured on the server.' };
+  }
+
+  if (!captchaToken) {
+    return { ok: false, error: 'Captcha token is required.' };
+  }
+
+  const params = new URLSearchParams({
+    secret: captchaSecretKey,
+    response: captchaToken
+  });
+
+  if (remoteIp) {
+    params.append('remoteip', remoteIp);
+  }
+
+  const response = await fetch(captchaVerifyUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: params.toString()
+  });
+
+  if (!response.ok) {
+    return { ok: false, error: 'Captcha verification request failed.' };
+  }
+
+  const verifyResult = await response.json();
+  if (!verifyResult.success) {
+    return { ok: false, error: 'Captcha verification failed.' };
+  }
+
+  return { ok: true };
+}
+
+async function sendSmsAlert() {
+  if (!smsEnabled || !smsEndpointUrl || !smsAlertPhone) {
+    return;
+  }
+
+  const headers = {};
+  if (smsAuthHeaderValue) {
+    headers[smsAuthHeaderName] = smsAuthHeaderValue;
+  }
+
+  let requestUrl = smsEndpointUrl;
+  let requestBody;
+
+  if (smsEndpointMethod === 'GET') {
+    const url = new URL(smsEndpointUrl);
+    url.searchParams.set('message', smsAlertMessage);
+    url.searchParams.set('phone', smsAlertPhone);
+    requestUrl = url.toString();
+  } else {
+    headers['Content-Type'] = 'application/json';
+    requestBody = JSON.stringify({
+      message: smsAlertMessage,
+      phone: smsAlertPhone
+    });
+  }
+
+  const smsResponse = await fetch(requestUrl, {
+    method: smsEndpointMethod,
+    headers,
+    body: requestBody
+  });
+
+  if (!smsResponse.ok) {
+    const responseBody = await smsResponse.text();
+    throw new Error(`SMS endpoint failed (${smsResponse.status}): ${responseBody}`);
+  }
+}
+
 app.get('/health', (req, res) => {
   res.status(200).json({ ok: true, service: 'email-backend-security' });
 });
 
-app.post('/send-email', (req, res) => {
+app.post('/send-email', async (req, res) => {
   const payload = typeof req.body === 'string'
     ? { notes: req.body, type: 'demo' }
     : (req.body || {});
@@ -50,6 +151,7 @@ app.post('/send-email', (req, res) => {
     company = '',
     notes = '',
     message = '',
+    captchaToken = '',
     type = 'demo',
     companyName = '',
     contactInfo = '',
@@ -98,13 +200,24 @@ app.post('/send-email', (req, res) => {
     ].join('\n')
   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return res.status(500).send(`Email send failed: ${error.message || error.toString()}`);
+  try {
+    const captchaCheck = await verifyCaptchaToken(captchaToken, getRequestIp(req));
+    if (!captchaCheck.ok) {
+      return res.status(400).send(captchaCheck.error);
+    }
+
+    const info = await transporter.sendMail(mailOptions);
+
+    try {
+      await sendSmsAlert();
+    } catch (smsError) {
+      console.error('SMS alert failed:', smsError);
     }
 
     res.status(200).send('Email sent: ' + info.response);
-  });
+  } catch (error) {
+    res.status(500).send(`Email send failed: ${error.message || error.toString()}`);
+  }
 });
 
 app.listen(port, () => {

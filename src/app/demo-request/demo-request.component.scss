@@ -108,6 +108,15 @@ button[disabled] {
 	font-size: 0.85rem;
 }
 
+.captcha-block {
+	display: grid;
+	gap: 0.35rem;
+}
+
+.captcha-wrap {
+	min-height: 78px;
+}
+
 @media (max-width: 760px) {
 	.demo-header {
 		align-items: flex-start;
