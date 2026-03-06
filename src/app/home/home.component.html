@@ -96,26 +96,37 @@
     <div class="section-inner">
       <h2 id="results-heading">Proven in the Field</h2>
       @if (testimonialVideos().length > 0) {
-        <div class="video-scroller" aria-label="Testimonial videos">
-          @for (video of testimonialVideos(); track video.featureId + video.videoUrl) {
-            <article class="video-card">
-              <h3>{{ video.title }}</h3>
-              @if (toYouTubeEmbedUrl(video.videoUrl); as youtubeUrl) {
-                <iframe
-                  class="video-frame"
-                  [src]="youtubeUrl"
-                  [title]="video.title"
-                  loading="lazy"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen
-                ></iframe>
-              } @else {
-                <video controls preload="metadata" [poster]="video.posterUrl || null">
-                  <source [src]="video.videoUrl" type="video/mp4" />
-                </video>
-              }
-            </article>
+        @if (selectedTestimonial(); as selectedVideo) {
+          <article class="video-card">
+            <h3>{{ selectedVideo.title }}</h3>
+            @if (toYouTubeEmbedUrl(selectedVideo.videoUrl); as youtubeUrl) {
+              <iframe
+                class="video-frame"
+                [src]="youtubeUrl"
+                [title]="selectedVideo.title"
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+            } @else {
+              <video controls preload="metadata" [poster]="selectedVideo.posterUrl || null">
+                <source [src]="selectedVideo.videoUrl" type="video/mp4" />
+              </video>
+            }
+          </article>
+        }
+
+        <div class="testimonial-scroll" aria-label="Select testimonial video" tabindex="0">
+          @for (video of testimonialVideos(); track video.featureId + video.videoUrl; let idx = $index) {
+            <button
+              type="button"
+              class="testimonial-chip"
+              [class.active]="selectedTestimonialIndex() === idx"
+              (click)="selectTestimonial(idx)"
+            >
+              {{ video.title }}
+            </button>
           }
         </div>
       } @else {

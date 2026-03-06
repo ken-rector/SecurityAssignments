@@ -32,7 +32,7 @@
     } @else {
       <div class="actions-row">
         <button type="button" (click)="showList()" [disabled]="loading()">Back to List</button>
-        <button type="button" (click)="saveVideos()" [disabled]="loading() || !canSave()">
+        <button type="button" (click)="saveVideos()" [disabled]="loading() || videosForm.invalid">
           Save
         </button>
         <button type="button" (click)="removeSelectedVideo()" [disabled]="loading()">Delete</button>

@@ -18,9 +18,20 @@ export class HomeComponent {
   private readonly sanitizer = inject(DomSanitizer);
 
   protected readonly videos = signal<VideoLink[]>([]);
+  protected readonly selectedTestimonialIndex = signal(0);
   protected readonly testimonialVideos = computed(() =>
     this.videos().filter((video) => video.kind === 'testimonial'),
   );
+  protected readonly selectedTestimonial = computed(() => {
+    const testimonials = this.testimonialVideos();
+
+    if (testimonials.length === 0) {
+      return null;
+    }
+
+    const index = this.selectedTestimonialIndex();
+    return testimonials[index] ?? testimonials[0];
+  });
   protected readonly instructionalVideos = computed(() =>
     this.videos().filter((video) => video.kind === 'instructional'),
   );
@@ -30,9 +41,16 @@ export class HomeComponent {
       .getPublicVideos()
       .pipe(takeUntilDestroyed())
       .subscribe({
-        next: (videos) => this.videos.set(videos),
+        next: (videos) => {
+          this.videos.set(videos);
+          this.selectedTestimonialIndex.set(0);
+        },
         error: () => this.videos.set([]),
       });
+  }
+
+  protected selectTestimonial(index: number): void {
+    this.selectedTestimonialIndex.set(index);
   }
 
   protected toYouTubeEmbedUrl(url: string): SafeResourceUrl | null {
@@ -68,7 +86,7 @@ export class HomeComponent {
     }
 
     return this.sanitizer.bypassSecurityTrustResourceUrl(
-      `https://www.youtube.com/embed/${videoId}`,
+      `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&playsinline=1`,
     );
   }
 }

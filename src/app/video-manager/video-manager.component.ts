@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -21,7 +21,6 @@ export class VideoManagerComponent {
   protected readonly loading = signal(false);
   protected readonly isEditing = signal(false);
   protected readonly selectedIndex = signal<number | null>(null);
-  protected readonly canSave = computed(() => this.videosForm.valid);
 
   protected readonly videosForm = this.fb.group({
     videos: this.fb.array([]),

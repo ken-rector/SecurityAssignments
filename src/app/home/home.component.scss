@@ -190,6 +190,42 @@ p {
   margin-top: 1rem;
 }
 
+.testimonial-scroll {
+  display: flex;
+  gap: 0.65rem;
+  margin-top: 0.85rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding-bottom: 0.35rem;
+  scroll-snap-type: x mandatory;
+}
+
+.testimonial-chip {
+  background: #0e2135;
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  color: var(--text-main);
+  cursor: pointer;
+  flex: 0 0 auto;
+  font-size: 0.9rem;
+  max-width: 22rem;
+  overflow: hidden;
+  padding: 0.5rem 0.85rem;
+  scroll-snap-align: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.testimonial-scroll:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.testimonial-chip.active {
+  background: rgba(95, 134, 178, 0.2);
+  border-color: var(--accent-strong);
+}
+
 .video-card {
   background: linear-gradient(180deg, rgba(19, 41, 67, 0.7), rgba(13, 31, 51, 0.9));
   border: 1px solid var(--border-soft);
