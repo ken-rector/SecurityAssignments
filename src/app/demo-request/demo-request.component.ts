@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, inject, signal } fro
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { EmailService } from '../email.service';
+import { EmailService } from '../services/email.service';
 import { environment } from '../../environments/environment';
 
 type Grecaptcha = {
@@ -99,7 +99,8 @@ export class DemoRequestComponent implements AfterViewInit {
       addr2: '',
       city: '',
       state: '',
-      zip: ''
+      zip: '',
+      smsTitle: 'Demo Request Received'
     };
 
     this.loading.set(true);
@@ -183,6 +184,18 @@ export class DemoRequestComponent implements AfterViewInit {
     if (error instanceof HttpErrorResponse) {
       const rawBody = typeof error.error === 'string' ? error.error : '';
       const iisStyleError = rawBody.includes('500 - Internal server error') || rawBody.includes('Server Error');
+
+      if (error.status === 0) {
+        return 'The request could not reach the server. Please check your connection or CORS/server availability.';
+      }
+
+      if (error.status === 400) {
+        if (rawBody) {
+          return rawBody;
+        }
+
+        return 'Request rejected by the API (400). Most often this means captcha verification failed or captcha server keys are not configured.';
+      }
 
       if (iisStyleError) {
         return 'The server returned an unclear error. Your request may have still been received. Please wait 2-3 minutes before trying again to avoid duplicate emails.';
