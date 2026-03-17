@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map, of, switchMap } from 'rxjs';
 import { API_CONFIG } from '../api.config';
 import {
   VideoKind,
@@ -21,7 +21,22 @@ export class VideoLibraryService {
   }
 
   getPublicVideos(): Observable<VideoLink[]> {
-    return this.getAll(true, null).pipe(map((items) => items.map((item) => this.toVideoLink(item))));
+    return this.getAll(true, null).pipe(
+      map((items) => items.map((item) => this.toVideoLink(item))),
+      catchError(() => this.getLocalVideos()),
+      switchMap((videos) => videos.length > 0 ? of(videos) : this.getLocalVideos()),
+    );
+  }
+
+  private getLocalVideos(): Observable<VideoLink[]> {
+    return this.http.get(`data/videos.json?_=${Date.now()}`, { responseType: 'text' }).pipe(
+      map((text) => {
+        const parsed = JSON.parse(text);
+        const vids: VideoLibrary[] = Array.isArray(parsed) ? parsed : (parsed.videos ?? []);
+        return vids.map((item: VideoLibrary) => this.toVideoLink(item));
+      }),
+      catchError(() => of([])),
+    );
   }
 
   saveVideos(videos: VideoLink[]): Observable<unknown> {

@@ -243,14 +243,24 @@ p {
   width: 100%;
 }
 
-.video-frame {
-  aspect-ratio: 16 / 9;
-  border: 0;
-  border-radius: 0.5rem;
+.video-frame-wrapper {
+  overflow: hidden;
+  padding-top: 56.25%;
+  position: relative;
   width: 100%;
 }
 
-.testimonial-selected-card .video-frame,
+.video-frame {
+  border: 0;
+  border-radius: 0.5rem;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.testimonial-selected-card .video-frame-wrapper,
 .testimonial-selected-card video {
   display: block;
   margin: 0 auto;

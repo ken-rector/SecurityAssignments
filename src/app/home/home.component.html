@@ -107,15 +107,17 @@
           <article class="video-card testimonial-selected-card">
             <h3>{{ selectedVideo.title }}</h3>
             @if (toYouTubeEmbedUrl(selectedVideo.videoUrl); as youtubeUrl) {
-              <iframe
-                class="video-frame"
-                [src]="youtubeUrl"
-                [title]="selectedVideo.title"
-                loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
-              ></iframe>
+              <div class="video-frame-wrapper">
+                <iframe
+                  class="video-frame"
+                  [src]="youtubeUrl"
+                  [title]="selectedVideo.title"
+                  loading="lazy"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
+              </div>
             } @else {
               <video controls preload="metadata" [poster]="selectedVideo.posterUrl || null">
                 <source [src]="selectedVideo.videoUrl" type="video/mp4" />
@@ -138,7 +140,7 @@
         </div>
       } @else {
         <div class="video-placeholder" role="img" aria-label="Testimonial video placeholder">
-          Testimonials will appear here after video manager publishing.
+          Your browser does not support the video tag.  Please check this site on a different browser.
         </div>
       }
       <h3 class="subsection-title">Client Results Snapshot</h3>
@@ -202,15 +204,17 @@
             <article class="video-card">
               <h3>{{ video.title }}</h3>
               @if (toYouTubeEmbedUrl(video.videoUrl); as youtubeUrl) {
-                <iframe
-                  class="video-frame"
-                  [src]="youtubeUrl"
-                  [title]="video.title"
-                  loading="lazy"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen
-                ></iframe>
+                <div class="video-frame-wrapper">
+                  <iframe
+                    class="video-frame"
+                    [src]="youtubeUrl"
+                    [title]="video.title"
+                    loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                  ></iframe>
+                </div>
               } @else {
                 <video controls preload="metadata" [poster]="video.posterUrl || null">
                   <source [src]="video.videoUrl" type="video/mp4" />
