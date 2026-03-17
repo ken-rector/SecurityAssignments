@@ -11,6 +11,11 @@ export const routes: Routes = [
 		loadComponent: () =>
 			import('./demo-request/demo-request.component').then((m) => m.DemoRequestComponent),
 	},
+	{
+		path: 'overview',
+		loadComponent: () =>
+			import('./video-overview/video-overview.component').then((m) => m.VideoOverviewComponent),
+	},
 	{ path: 'login', component: LoginComponent },
 	{ path: 'video_manager', component: VideoManagerComponent, canActivate: [authGuard] },
 	{ path: '**', redirectTo: '' },
