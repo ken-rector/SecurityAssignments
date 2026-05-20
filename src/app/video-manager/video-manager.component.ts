@@ -21,6 +21,8 @@ export class VideoManagerComponent {
   protected readonly loading = signal(false);
   protected readonly isEditing = signal(false);
   protected readonly selectedIndex = signal<number | null>(null);
+  protected readonly showOnlyActive = signal(true);
+  protected readonly searchText = signal('');
 
   protected readonly videosForm = this.fb.group({
     videos: this.fb.array([]),
@@ -37,6 +39,37 @@ export class VideoManagerComponent {
   protected openEditor(index: number): void {
     this.selectedIndex.set(index);
     this.isEditing.set(true);
+  }
+
+  protected onShowOnlyActiveChange(checked: boolean): void {
+    this.showOnlyActive.set(checked);
+
+    if (!checked) {
+      this.loadVideos();
+    }
+  }
+
+  protected onSearchTextChange(value: string): void {
+    this.searchText.set(value);
+  }
+
+  protected listedVideos(): Array<{ group: FormGroup; index: number }> {
+    const search = this.searchText().toLowerCase().trim();
+    const videos = this.videosArray.controls.map((control, index) => ({
+      group: control as FormGroup,
+      index,
+    }));
+
+    let filtered = videos;
+    if (this.showOnlyActive()) {
+      filtered = filtered.filter((video) => this.isActiveValue(video.group.value.active));
+    }
+    if (search) {
+      filtered = filtered.filter((video) =>
+        (video.group.value.title || '').toLowerCase().includes(search)
+      );
+    }
+    return filtered;
   }
 
   protected newVideo(): void {
@@ -77,8 +110,9 @@ export class VideoManagerComponent {
       return;
     }
 
-    this.videosArray.removeAt(index);
-    this.showList();
+    const selectedVideo = this.videosArray.at(index) as FormGroup;
+    selectedVideo.patchValue({ active: false });
+    this.saveVideos();
   }
 
   protected removeVideoRow(index: number): void {
@@ -159,5 +193,9 @@ export class VideoManagerComponent {
       kind: [video?.kind ?? 'testimonial', [Validators.required]],
       active: [video?.active ?? true],
     });
+  }
+
+  private isActiveValue(value: unknown): boolean {
+    return value === true || value === 1 || value === '1';
   }
 }

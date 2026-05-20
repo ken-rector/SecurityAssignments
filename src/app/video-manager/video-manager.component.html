@@ -11,18 +11,36 @@
     @if (!isEditing()) {
       <div class="actions-row">
         <button type="button" (click)="newVideo()" [disabled]="loading()">New Video</button>
+        <label class="search-label">
+          <input
+            type="text"
+            placeholder="Search"
+            [value]="searchText()"
+            (input)="onSearchTextChange($any($event.target).value)"
+            aria-label="Search by title"
+          />
+        </label>
+        <label class="checkbox">
+          <input
+            type="checkbox"
+            [checked]="showOnlyActive()"
+            (change)="onShowOnlyActiveChange($any($event.target).checked)"
+          />
+          Show Only Active
+        </label>
       </div>
 
+      @let visibleVideos = listedVideos();
       <div class="video-listing" aria-live="polite">
-        @if (videosArray.controls.length === 0) {
+        @if (visibleVideos.length === 0) {
           <p>No videos found.</p>
         } @else {
-          @for (videoGroup of videosArray.controls; track $index) {
+          @for (videoItem of visibleVideos; track videoItem.index) {
             <article class="video-row">
-              <button type="button" class="video-link" (click)="openEditor($index)">
-                <span class="video-link-title">{{ videoGroup.value.title || 'Untitled video' }}</span>
+              <button type="button" class="video-link" (click)="openEditor(videoItem.index)">
+                <span class="video-link-title">{{ videoItem.group.value.title || 'Untitled video' }}</span>
                 <span>
-                  Type: {{ videoGroup.value.kind }} · Active: {{ videoGroup.value.active ? 'Yes' : 'No' }}
+                  Type: {{ videoItem.group.value.kind }} · Active: {{ videoItem.group.value.active ? 'Yes' : 'No' }}
                 </span>
               </button>
             </article>
