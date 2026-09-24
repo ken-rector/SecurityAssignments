@@ -3,6 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { EmailService } from '../services/email.service';
+import { DemoRequestService } from '../services/demo-request.service';
 import { environment } from '../../environments/environment';
 
 type Grecaptcha = {
@@ -35,6 +36,7 @@ declare global {
 export class DemoRequestComponent implements AfterViewInit {
   private readonly fb = inject(FormBuilder);
   private readonly emailService = inject(EmailService);
+  private readonly demoRequestService = inject(DemoRequestService);
   private readonly phonePattern = /^\d{3}-\d{3}-\d{4}$/;
   private readonly captchaSiteKey = environment.captchaSiteKey;
   private readonly captchaScriptId = 'google-recaptcha-script';
@@ -84,6 +86,18 @@ export class DemoRequestComponent implements AfterViewInit {
     }
 
     const value = this.demoForm.getRawValue();
+
+    this.demoRequestService
+      .save({
+        fullName: value.fullName?.trim() ?? '',
+        company: value.company?.trim() || null,
+        email: value.email?.trim() ?? '',
+        phone: (value.phone ?? '').replace(/\D/g, ''),
+        message: value.message?.trim() || null,
+      })
+      .subscribe({
+        error: (error: unknown) => console.error('Failed to save demo request', error),
+      });
 
     const emailData = {
       name: value.fullName?.trim() ?? '',
