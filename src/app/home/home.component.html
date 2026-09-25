@@ -1,4 +1,22 @@
 <main class="site-root">
+  <!-- New-feature strip: one line until clicked, so it doesn't take over the first view -->
+  <details class="new-strip">
+    <summary>
+      <span class="new-badge">New</span>
+      One-click invoicing to QuickBooks Online
+      <span class="new-more" aria-hidden="true">&rsaquo;</span>
+    </summary>
+    <div class="new-details">
+      <p>
+        <strong>Stop re-typing invoices.</strong> Send client invoices straight from your schedule into
+        QuickBooks Online in one click. Every shift worked becomes an invoice line automatically, with
+        customers, service items, invoice numbers, terms and sales tax handled for you. Work that used to
+        take days of manual transfer each month now takes minutes.
+      </p>
+      <a class="btn btn-primary" [routerLink]="'/demo-request'">See It in a Live Demo</a>
+    </div>
+  </details>
+
   <section class="hero section-shell">
     <div class="section-inner hero-grid">
       <div>
@@ -93,7 +111,7 @@
             Generate invoices automatically based on completed assignments. Export detailed reports
             instantly.
           </p>
-          <p>QuickBooks integration coming soon.</p>
+          <p><strong>New:</strong> one-click invoice posting to QuickBooks Online.</p>
         </article>
       </div>
     </div>

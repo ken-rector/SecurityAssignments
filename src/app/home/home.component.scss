@@ -330,3 +330,58 @@ p {
     margin-left: 10vw;
   }
 }
+
+.new-strip {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-soft);
+
+  summary {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    list-style: none;
+    padding: 0.55rem 1rem;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: -2px;
+  }
+
+  &[open] .new-more {
+    transform: rotate(90deg);
+  }
+}
+
+.new-more {
+  font-size: 1.3rem;
+  line-height: 1;
+  transition: transform 0.2s;
+}
+
+.new-details {
+  display: grid;
+  gap: 0.8rem;
+  justify-items: center;
+  margin: 0 auto;
+  max-width: 72rem;
+  padding: 0 1.25rem 1.1rem;
+  text-align: center;
+}
+
+.new-badge {
+  background: #ffd166;
+  border-radius: 999px;
+  color: #071422;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  padding: 0.1rem 0.6rem;
+  text-transform: uppercase;
+}
