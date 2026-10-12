@@ -1,0 +1,266 @@
+// Same look as the home page: its color tokens, section, card, list and button styles.
+:host {
+  --bg-main: #071422;
+  --bg-card: #132943;
+  --border-soft: #2a405a;
+  --text-main: #e8eff8;
+  --text-muted: #a8bacd;
+  --accent: #5f86b2;
+  --accent-strong: #7ea2cb;
+  --focus: #c7d9ef;
+
+  color: var(--text-main);
+  display: block;
+}
+
+.site-root {
+  background:
+    radial-gradient(circle at top right, rgba(126, 162, 203, 0.12), transparent 36%),
+    var(--bg-main);
+  min-height: 100vh;
+}
+
+.section-shell {
+  border-bottom: 1px solid var(--border-soft);
+  padding: 3.5rem 1.25rem;
+}
+
+.section-inner {
+  margin: 0 auto;
+  max-width: 72rem;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3.2vw, 2.4rem);
+}
+
+h3 {
+  font-size: 1.2rem;
+}
+
+p {
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.accent {
+  color: var(--accent-strong);
+}
+
+.eyebrow {
+  color: var(--accent-strong);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.page-header {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.back-link {
+  color: var(--accent-strong);
+}
+
+.subheadline {
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  margin-top: 1.25rem;
+  max-width: 48rem;
+}
+
+.section-lead {
+  margin-top: 0.85rem;
+}
+
+.hero-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.btn {
+  border-radius: 0.5rem;
+  display: inline-block;
+  font-weight: 700;
+  padding: 0.75rem 1.1rem;
+  text-decoration: none;
+}
+
+.btn:focus-visible,
+.back-link:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background: var(--accent-strong);
+  color: #091522;
+}
+
+.btn-primary:hover {
+  background: #8baed6;
+}
+
+.btn-secondary {
+  border: 1px solid var(--accent);
+  color: var(--text-main);
+}
+
+.btn-secondary:hover {
+  background: rgba(95, 134, 178, 0.14);
+}
+
+.bullet-grid,
+.bullet-list {
+  color: var(--text-main);
+  display: grid;
+  gap: 0.7rem 1.2rem;
+  margin: 1.25rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.bullet-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.card-grid-3 {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 1.4rem;
+}
+
+.info-card {
+  background: linear-gradient(180deg, rgba(19, 41, 67, 0.7), rgba(13, 31, 51, 0.9));
+  border: 1px solid var(--border-soft);
+  border-radius: 0.75rem;
+  display: grid;
+  gap: 0.65rem;
+  padding: 1rem;
+}
+
+.price {
+  color: var(--text-main);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.price span {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+.table-wrap {
+  margin-top: 1.25rem;
+  overflow-x: auto;
+}
+
+.data-table {
+  border-collapse: collapse;
+  min-width: 640px;
+  width: 100%;
+}
+
+.data-table th,
+.data-table td {
+  border-bottom: 1px solid var(--border-soft);
+  padding: 0.8rem 0.6rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.data-table thead th {
+  color: var(--accent-strong);
+}
+
+.data-table td {
+  color: var(--text-main);
+}
+
+.row-us {
+  background: rgba(126, 162, 203, 0.12);
+}
+
+.note {
+  font-size: 0.88rem;
+  font-style: italic;
+}
+
+.callout {
+  background: rgba(95, 134, 178, 0.14);
+  border-left: 4px solid var(--accent-strong);
+  color: var(--text-main);
+  margin: 1.25rem 0 0.75rem;
+  padding: 0.9rem 1rem;
+}
+
+.final-cta {
+  background: linear-gradient(140deg, #0a1b2e, #102742);
+}
+
+@media (max-width: 900px) {
+  .bullet-grid,
+  .card-grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .section-shell {
+    padding: 2.8rem 1rem;
+  }
+
+  // Tables become one card per row on phones.
+  .data-table {
+    min-width: 0;
+  }
+
+  .data-table thead {
+    display: none;
+  }
+
+  .data-table tr,
+  .data-table th,
+  .data-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .data-table tr {
+    border: 1px solid var(--border-soft);
+    border-radius: 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .data-table th[scope='row'] {
+    border-bottom: none;
+    color: var(--accent-strong);
+    padding-bottom: 0;
+  }
+
+  .data-table td {
+    border-bottom: none;
+    padding-top: 0.25rem;
+  }
+
+  .data-table td::before {
+    content: attr(data-label) ': ';
+    font-weight: 700;
+  }
+}

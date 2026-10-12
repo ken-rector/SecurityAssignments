@@ -16,6 +16,10 @@ export const routes: Routes = [
 		loadComponent: () =>
 			import('./video-overview/video-overview.component').then((m) => m.VideoOverviewComponent),
 	},
+	{
+		path: 'pricing',
+		loadComponent: () => import('./pricing/pricing.component').then((m) => m.PricingComponent),
+	},
 	{ path: 'login', component: LoginComponent },
 	{ path: 'video_manager', component: VideoManagerComponent, canActivate: [authGuard] },
 	{ path: '**', redirectTo: '' },

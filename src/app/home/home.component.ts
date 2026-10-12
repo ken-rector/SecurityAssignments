@@ -5,6 +5,21 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { VideoLibraryService } from '../services/video-library.service';
 import { VideoLink } from '../models/video-link.model';
 
+// Real customer testimonials, served from the AssignPros site. They lead the testimonial player,
+// ahead of the video library's testimonials. Once they're on YouTube and in the Video Manager as
+// "testimonial", remove them from this list so they don't appear twice.
+const CUSTOMER_TESTIMONIALS: VideoLink[] = [1, 2, 3, 4, 5, 6, 7].map(
+  (n): VideoLink => ({
+    featureId: -n,
+    title: `Customer Testimonial ${n}`,
+    videoUrl: `https://assignpros.com/assets/videos/testimonials/Testimony_${n}.mp4`,
+    posterUrl: `https://assignpros.com/assets/videos/testimonials/Testimony_${n}.jpg`,
+    transcriptText: '',
+    kind: 'testimonial',
+    active: true,
+  }),
+);
+
 @Component({
   selector: 'app-home',
   imports: [RouterLink],
@@ -16,7 +31,7 @@ export class HomeComponent {
   private readonly videoLibraryService = inject(VideoLibraryService);
   private readonly sanitizer = inject(DomSanitizer);
 
-  protected readonly videos = signal<VideoLink[]>([]);
+  protected readonly videos = signal<VideoLink[]>(CUSTOMER_TESTIMONIALS);
   protected readonly selectedTestimonialIndex = signal(0);
   protected readonly testimonialVideos = computed(() =>
     this.videos().filter((video) => video.kind === 'testimonial'),
@@ -41,10 +56,10 @@ export class HomeComponent {
       .pipe(takeUntilDestroyed())
       .subscribe({
         next: (videos) => {
-          this.videos.set(videos);
+          this.videos.set([...CUSTOMER_TESTIMONIALS, ...videos]);
           this.selectedTestimonialIndex.set(0);
         },
-        error: () => this.videos.set([]),
+        error: () => this.videos.set(CUSTOMER_TESTIMONIALS),
       });
   }
 

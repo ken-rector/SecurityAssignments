@@ -385,3 +385,20 @@ p {
   padding: 0.1rem 0.6rem;
   text-transform: uppercase;
 }
+
+// Blended Security sections reuse the existing cards and lists; these only add the 3-column variants.
+.accent {
+  color: var(--accent-strong);
+}
+
+.card-grid-3,
+.bullet-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 900px) {
+  .card-grid-3,
+  .bullet-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}

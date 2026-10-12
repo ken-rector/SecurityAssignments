@@ -11,6 +11,7 @@ const outFile = path.join(__dirname, '..', 'public', 'site-content.json');
 // Route -> component folder, for the public pages (login and the video manager are staff-only).
 const pages = [
   { route: '', title: 'Security Assignments Home', folder: 'home' },
+  { route: 'pricing', title: 'Pricing', folder: 'pricing' },
   { route: 'demo-request', title: 'Request a Demo', folder: 'demo-request' },
 ];
 
@@ -24,6 +25,9 @@ function htmlToText(html) {
     .replace(/<li[^>]*>/gi, '- ')
     .replace(/<[^>]+>/g, ' ')
     .replace(/&nbsp;/g, ' ')
+    .replace(/&ndash;/g, '-')
+    .replace(/&trade;/g, 'TM')
+    .replace(/&middot;/g, '-')
     .replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
