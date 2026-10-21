@@ -5,6 +5,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { EmailService } from '../services/email.service';
 import { DemoRequestService } from '../services/demo-request.service';
 import { environment } from '../../environments/environment';
+import { getAttribution } from '../attribution';
 
 type Grecaptcha = {
   ready(callback: () => void): void;
@@ -59,6 +60,9 @@ export class DemoRequestComponent implements AfterViewInit {
     phone: ['', [Validators.required, Validators.pattern(this.phonePattern)]],
     message: ['', [Validators.required, Validators.minLength(10)]],
     preferredDate: [''],
+    officerCount: [''],
+    // Funnel texts only go to leads who tick this (A2P 10DLC); unticked leads get email only.
+    smsConsent: [false],
     captchaToken: ['', [Validators.required]],
   });
 
@@ -91,6 +95,11 @@ export class DemoRequestComponent implements AfterViewInit {
     }
 
     const value = this.demoForm.getRawValue();
+    // Officer count leads the message, where IAdmin's lead triage reads it (pricing example, lead quality).
+    const notes = [value.officerCount ? `Officers: ${value.officerCount}` : '', value.message?.trim() ?? '']
+      .filter((s) => s)
+      .join('\n');
+    const attribution = getAttribution();
 
     this.demoRequestService
       .save({
@@ -98,10 +107,15 @@ export class DemoRequestComponent implements AfterViewInit {
         company: value.company?.trim() || null,
         email: value.email?.trim() ?? '',
         phone: (value.phone ?? '').replace(/\D/g, ''),
-        message: value.message?.trim() || null,
+        message: notes || null,
         source: this.isDemo ? 'Demo' : 'Contact',
         demoRequestedDate: this.isDemo && value.preferredDate ? value.preferredDate : null,
-        landingPage: window.location.href,
+        smsConsent: !!value.smsConsent,
+        utmSource: attribution.utmSource,
+        utmMedium: attribution.utmMedium,
+        campaign: attribution.campaign,
+        keyword: attribution.keyword,
+        landingPage: attribution.landingPage ?? window.location.href,
         timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       })
       .subscribe({
@@ -113,7 +127,7 @@ export class DemoRequestComponent implements AfterViewInit {
       email: value.email?.trim() ?? '',
       phone: value.phone?.trim() ?? '',
       company: value.company?.trim() ?? '',
-      notes: value.message?.trim() ?? '',
+      notes,
       captchaToken: value.captchaToken ?? '',
       type: 'contact',
       requestType: this.isDemo ? 'demo' : 'info',
@@ -137,7 +151,7 @@ export class DemoRequestComponent implements AfterViewInit {
             ? 'Thank you for your demo request. We received your information and will contact you ASAP.'
             : 'Thank you for your message. We received your information and will get back to you ASAP.',
         );
-        this.demoForm.reset({ fullName: '', company: '', email: '', phone: '', message: '', preferredDate: '', captchaToken: '' });
+        this.demoForm.reset({ fullName: '', company: '', email: '', phone: '', message: '', preferredDate: '', officerCount: '', smsConsent: false, captchaToken: '' });
         this.resetCaptcha();
       },
       error: (error: unknown) => {

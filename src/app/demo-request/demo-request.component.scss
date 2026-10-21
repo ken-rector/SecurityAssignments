@@ -63,6 +63,7 @@ label {
 }
 
 input,
+select,
 textarea,
 button {
 	border: 1px solid var(--border-soft);
@@ -71,6 +72,7 @@ button {
 }
 
 input,
+select,
 textarea {
 	background: #081727;
 	color: var(--text-main);
@@ -126,4 +128,18 @@ button[disabled] {
 	.two-col {
 		grid-template-columns: 1fr;
 	}
+}
+
+.consent {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+  font-weight: normal;
+  font-size: 0.9rem;
+
+  input {
+    width: auto;
+    margin-top: 4px;
+  }
 }

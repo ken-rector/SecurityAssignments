@@ -56,12 +56,27 @@
                 </label>
             </div>
 
-            @if (isDemo) {
+            <div class="row two-col">
                 <label>
-                    Preferred Demo Date
-                    <input type="date" formControlName="preferredDate" [min]="today" />
+                    Number of Officers
+                    <select formControlName="officerCount">
+                        <option value="">Select...</option>
+                        <option value="1-10">1-10</option>
+                        <option value="11-25">11-25</option>
+                        <option value="26-50">26-50</option>
+                        <option value="51-100">51-100</option>
+                        <option value="101-250">101-250</option>
+                        <option value="250+">250+</option>
+                    </select>
                 </label>
-            }
+
+                @if (isDemo) {
+                    <label>
+                        Preferred Demo Date
+                        <input type="date" formControlName="preferredDate" [min]="today" />
+                    </label>
+                }
+            </div>
 
             <label>
                 {{ isDemo ? 'Message' : 'How can we help?' }}
@@ -69,6 +84,14 @@
                 @if (demoForm.controls.message.touched && demoForm.controls.message.invalid) {
                     <span class="field-error">Message must be at least 10 characters.</span>
                 }
+            </label>
+
+            <label class="consent">
+                <input type="checkbox" formControlName="smsConsent" />
+                <span>
+                    Yes, AssignPros may text me about my {{ isDemo ? 'demo' : 'request' }}. Message frequency varies.
+                    Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. Consent is not a condition of purchase.
+                </span>
             </label>
 
             <div class="captcha-block" aria-live="polite">

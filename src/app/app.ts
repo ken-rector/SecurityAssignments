@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, DOCUMENT, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { environment } from '../environments/environment';
+import { captureAttribution } from './attribution';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,9 @@ export class App {
   protected readonly apiUrl = environment.apiUrl;
 
   constructor() {
+    // Before the router runs, while the address still has the ad's UTM tags.
+    captureAttribution();
+
     // The <assignpros-chat> widget is shared by every AssignPros app and served by InternalAdmin_API,
     // so updates to it reach every app without redeploying them.
     const document = inject(DOCUMENT);

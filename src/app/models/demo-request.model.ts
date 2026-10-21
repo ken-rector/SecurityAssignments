@@ -8,4 +8,9 @@ export interface DemoRequestSaveRequest {
   demoRequestedDate?: string | null; // yyyy-MM-dd
   landingPage?: string | null;
   timeZone?: string | null;
+  smsConsent?: boolean;
+  utmSource?: string | null;
+  utmMedium?: string | null;
+  campaign?: string | null;
+  keyword?: string | null;
 }
