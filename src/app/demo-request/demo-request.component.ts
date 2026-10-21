@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { EmailService } from '../services/email.service';
 import { DemoRequestService } from '../services/demo-request.service';
 import { environment } from '../../environments/environment';
@@ -44,6 +44,10 @@ export class DemoRequestComponent implements AfterViewInit {
 
   private captchaWidgetId: number | null = null;
 
+  // Set by the route: /demo-request is a demo request, /contact an info request.
+  protected readonly isDemo = inject(ActivatedRoute).snapshot.data['requestType'] !== 'info';
+  protected readonly today = new Date().toISOString().slice(0, 10);
+
   protected readonly loading = signal(false);
   protected readonly successMessage = signal('');
   protected readonly errorMessage = signal('');
@@ -54,6 +58,7 @@ export class DemoRequestComponent implements AfterViewInit {
     email: ['', [Validators.required, Validators.email]],
     phone: ['', [Validators.required, Validators.pattern(this.phonePattern)]],
     message: ['', [Validators.required, Validators.minLength(10)]],
+    preferredDate: [''],
     captchaToken: ['', [Validators.required]],
   });
 
@@ -94,6 +99,10 @@ export class DemoRequestComponent implements AfterViewInit {
         email: value.email?.trim() ?? '',
         phone: (value.phone ?? '').replace(/\D/g, ''),
         message: value.message?.trim() || null,
+        source: this.isDemo ? 'Demo' : 'Contact',
+        demoRequestedDate: this.isDemo && value.preferredDate ? value.preferredDate : null,
+        landingPage: window.location.href,
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       })
       .subscribe({
         error: (error: unknown) => console.error('Failed to save demo request', error),
@@ -107,6 +116,8 @@ export class DemoRequestComponent implements AfterViewInit {
       notes: value.message?.trim() ?? '',
       captchaToken: value.captchaToken ?? '',
       type: 'contact',
+      requestType: this.isDemo ? 'demo' : 'info',
+      preferredDate: this.isDemo ? (value.preferredDate ?? '') : '',
       companyName: '',
       contactInfo: '',
       addr1: '',
@@ -114,7 +125,7 @@ export class DemoRequestComponent implements AfterViewInit {
       city: '',
       state: '',
       zip: '',
-      smsTitle: 'Demo Request Received'
+      smsTitle: this.isDemo ? 'Demo Request Received' : 'Message Received'
     };
 
     this.loading.set(true);
@@ -122,9 +133,11 @@ export class DemoRequestComponent implements AfterViewInit {
       next: () => {
         this.loading.set(false);
         this.successMessage.set(
-          'Thank you for your demo request. We received your information and will contact you ASAP.',
+          this.isDemo
+            ? 'Thank you for your demo request. We received your information and will contact you ASAP.'
+            : 'Thank you for your message. We received your information and will get back to you ASAP.',
         );
-        this.demoForm.reset({ fullName: '', company: '', email: '', phone: '', message: '', captchaToken: '' });
+        this.demoForm.reset({ fullName: '', company: '', email: '', phone: '', message: '', preferredDate: '', captchaToken: '' });
         this.resetCaptcha();
       },
       error: (error: unknown) => {

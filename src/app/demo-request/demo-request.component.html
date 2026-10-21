@@ -1,12 +1,17 @@
 <main class="demo-shell">
     <section class="demo-card" aria-labelledby="demo-title">
         <div class="demo-header">
-            <h1 id="demo-title">Book a Live Demo</h1>
+            <h1 id="demo-title">{{ isDemo ? 'Book a Live Demo' : 'Contact Us' }}</h1>
             <a routerLink="/" class="back-link">Back to Homepage</a>
         </div>
 
         <p class="demo-lead">
-            Submit your information and we will send a confirmation by email and text.
+            @if (isDemo) {
+                Submit your information and we will send a confirmation by email and text.
+            } @else {
+                Ask a question or request pricing and we will get back to you quickly.
+                Want to see it in action? <a routerLink="/demo-request">Book a live demo</a>.
+            }
         </p>
 
         <form [formGroup]="demoForm" (ngSubmit)="submit()" class="demo-form" novalidate>
@@ -51,8 +56,15 @@
                 </label>
             </div>
 
+            @if (isDemo) {
+                <label>
+                    Preferred Demo Date
+                    <input type="date" formControlName="preferredDate" [min]="today" />
+                </label>
+            }
+
             <label>
-                Message
+                {{ isDemo ? 'Message' : 'How can we help?' }}
                 <textarea formControlName="message" rows="6"></textarea>
                 @if (demoForm.controls.message.touched && demoForm.controls.message.invalid) {
                     <span class="field-error">Message must be at least 10 characters.</span>
@@ -71,7 +83,7 @@
                     @if (loading()) {
                         Sending...
                     } @else {
-                        Send Demo Request
+                        {{ isDemo ? 'Send Demo Request' : 'Send Message' }}
                     }
                 </button>
             </div>

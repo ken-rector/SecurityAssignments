@@ -8,12 +8,20 @@ import { VideoLink } from '../models/video-link.model';
 // Real customer testimonials, served from the AssignPros site. They lead the testimonial player,
 // ahead of the video library's testimonials. Once they're on YouTube and in the Video Manager as
 // "testimonial", remove them from this list so they don't appear twice.
-const CUSTOMER_TESTIMONIALS: VideoLink[] = [1, 2, 3, 4, 5, 6, 7].map(
-  (n): VideoLink => ({
-    featureId: -n,
-    title: `Customer Testimonial ${n}`,
-    videoUrl: `https://assignpros.com/assets/videos/testimonials/Testimony_${n}.mp4`,
-    posterUrl: `https://assignpros.com/assets/videos/testimonials/Testimony_${n}.jpg`,
+const CUSTOMER_TESTIMONIALS: VideoLink[] = [
+  { file: 'TimeSavings', title: 'Time Savings' },
+  { file: 'Licensing', title: 'Licensing' },
+  { file: 'RemoveManualSteps', title: 'Removing Manual Steps' },
+  { file: 'FocusingOnBusiness', title: 'Focusing on the Business' },
+  { file: 'ExponentialSavings', title: 'Exponential Savings' },
+  { file: 'SavingDaysEveryWeek', title: 'Saving Days Every Week' },
+  { file: 'LowerAdminStaffing', title: 'Lower Admin Staffing' },
+].map(
+  (v, index): VideoLink => ({
+    featureId: -(index + 1),
+    title: v.title,
+    videoUrl: `https://assignpros.com/assets/videos/testimonials/${v.file}.mp4`,
+    posterUrl: `https://assignpros.com/assets/videos/testimonials/${v.file}.jpg`,
     transcriptText: '',
     kind: 'testimonial',
     active: true,
