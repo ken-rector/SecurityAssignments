@@ -54,9 +54,7 @@ export class HomeComponent {
     const index = this.selectedTestimonialIndex();
     return testimonials[index] ?? testimonials[0];
   });
-  protected readonly instructionalVideos = computed(() =>
-    this.videos().filter((video) => video.kind === 'instructional'),
-  );
+  protected readonly currentYear = new Date().getFullYear();
 
   constructor() {
     this.videoLibraryService

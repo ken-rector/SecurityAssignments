@@ -330,39 +330,6 @@
     </div>
   </section>
 
-  @if (instructionalVideos().length > 0) {
-    <section class="section-shell" aria-labelledby="instructional-heading">
-      <div class="section-inner">
-        <h2 id="instructional-heading">Instructional Videos</h2>
-        <p class="section-lead">Training and operational walkthroughs for your team.</p>
-        <div class="video-scroller" aria-label="Instructional videos">
-          @for (video of instructionalVideos(); track video.featureId + video.videoUrl) {
-            <article class="video-card">
-              <h3>{{ video.title }}</h3>
-              @if (toYouTubeEmbedUrl(video.videoUrl); as youtubeUrl) {
-                <div class="video-frame-wrapper">
-                  <iframe
-                    class="video-frame"
-                    [src]="youtubeUrl"
-                    [title]="video.title"
-                    loading="lazy"
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen
-                  ></iframe>
-                </div>
-              } @else {
-                <video controls preload="metadata" [poster]="video.posterUrl || null">
-                  <source [src]="video.videoUrl" type="video/mp4" />
-                </video>
-              }
-            </article>
-          }
-        </div>
-      </div>
-    </section>
-  }
-
   <section id="executive-summary" class="section-shell" aria-labelledby="summary-heading">
     <div class="section-inner">
       <h2 id="summary-heading">AgentManager Executive Summary</h2>
@@ -399,7 +366,8 @@
 <footer class="site-footer">
   <div class="section-inner">
     <p class="footer-brand">SecurityAssignments.com</p>
-    <p>A Product of AssignPros Inc.</p>
+    <p>A Product of AssignPros &middot; Patent Pending</p>
+    <p>Copyright &copy; {{ currentYear }} AssignPros Inc. &ndash; All Rights Reserved</p>
     <p>AssignPros.com</p>
     <p>Based in Texas</p>
     <nav aria-label="Footer links" class="footer-nav">

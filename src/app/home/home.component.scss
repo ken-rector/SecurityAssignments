@@ -183,13 +183,6 @@ p {
   padding: 1rem;
 }
 
-.video-scroller {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  margin-top: 1rem;
-}
-
 .testimonial-scroll {
   display: flex;
   gap: 0.65rem;
