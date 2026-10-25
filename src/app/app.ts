@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, DOCUMENT, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { filter } from 'rxjs';
 import { environment } from '../environments/environment';
 import { captureAttribution } from './attribution';
+import { trackPageView } from './site-visit';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +19,11 @@ export class App {
   constructor() {
     // Before the router runs, while the address still has the ad's UTM tags.
     captureAttribution();
+
+    // One page-view note per page for Marketing Funnels > Site traffic in InternalAdmin.
+    inject(Router)
+      .events.pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
+      .subscribe((e) => trackPageView(e.urlAfterRedirects));
 
     // The <assignpros-chat> widget is shared by every AssignPros app and served by InternalAdmin_API,
     // so updates to it reach every app without redeploying them.
